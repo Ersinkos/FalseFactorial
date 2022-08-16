@@ -1,0 +1,60 @@
+/**
+* @file  Factorial.cpp
+* @description faktöriyel hesaplama (basamak kaydırmasız)
+* @course 1A
+* @assignment 1
+* @date 07.08.2022
+* @author Ersin Köseoğlu
+*/
+#include "Factorial.hpp"
+#include "ArrayList.hpp"
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+Factorial::Factorial(int n)
+{
+	res->add(n);
+	res_size=1;
+}
+int Factorial::carp(int x)
+{
+	int carry = 0;
+	
+    for (int i=0; i<res_size; i++)
+    {
+        int prod = res->elementAt(i) * x + carry;
+		res->assign(i,prod%10);
+        carry  = prod/10;    
+    }
+
+    while (carry)
+    {
+		res->insert(res_size,carry%10);
+        carry = carry/10;
+        res_size++;
+    }
+    return res_size;
+}
+void Factorial::hesapla(int n)
+{
+	ofstream dosyaYaz("sonuc.txt");
+	int toplam=0;
+	int m;
+    for (int x=n-1; x>=1; x--)
+    {
+		m=x;
+		toplam=0;
+		while(m>0)
+		{
+			toplam=toplam+(m%10);
+			m=m/10;
+		}
+        res_size = carp(toplam);
+    }
+
+    cout << "Factorial of given number is";
+	res->reverse();
+	dosyaYaz << *res;
+	dosyaYaz.close();
+}

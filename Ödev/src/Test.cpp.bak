@@ -1,0 +1,13 @@
+#include "ArrayList.hpp"
+#include "Factorial.hpp"
+int main()
+{
+	int n;
+	cout<<"faktoriyelini almak istediginiz sayi : ";
+	cin>>n;
+	Factorial* fact=new Factorial(n);
+	fact->hesapla(n);
+	
+	
+	return 0;
+}
